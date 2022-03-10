@@ -1,19 +1,43 @@
-import React from 'react'
-import { FaTimes } from 'react-icons/fa'
-import sublinks from './data'
-import { useGlobalContext} from './context'
+import React from 'react';
+import { FaTimes } from 'react-icons/fa';
+import sublinks from './data';
+import { useGlobalContext } from './context';
 
 const Sidebar_08 = () => {
   const { isSidebarOpen, closeSidebar } = useGlobalContext();
   return (
-    <div className = {`${ isSidebarOpen ? 'sidebar-wrapper show' : 'sidebar-wrapper' }`}>
-        <aside className="sidebar">
-          <button className="close-btn" onClick={closeSidebar}>
+    <>
+      <div
+        className={` ${ isSidebarOpen ? 'sidebar-wrapper show' : 'sidebar-wrapper'}`}>
+        <aside className='sidebar'>
+          <button className='close-btn' onClick={closeSidebar}>
             <FaTimes />
           </button>
+          <div className='sidebar-links'>
+            {sublinks.map((item, index) => {
+              const { page, links } = item;
+              return (
+                <article key={index}>
+                  <h4>{page}</h4>
+                  <div className='sidebar-sublinks'>
+                    {links.map( ( link, index )=>{
+                      const {label,icon, url} = link;
+                      return(
+                        <a href={url} key={index}>
+                          {icon}
+                          <h6>{label}</h6>
+                          </a>
+                      )
+                    })}
+                    </div>
+                </article>
+              );
+            })}
+          </div>
         </aside>
-    </div>
-  )
-}
+      </div>
+    </>
+  );
+};
 
-export default Sidebar_08
+export default Sidebar_08;
